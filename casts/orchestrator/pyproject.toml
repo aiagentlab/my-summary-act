@@ -1,0 +1,16 @@
+# Project configuration file
+# This file defines the dependencies and metadata for the package.
+# The Python package manager (uv) uses this file to install required packages.
+# To add a dependency to this package, use `uv add <<package_name>> --package orchestrator`.
+
+[project]
+name = "orchestrator"
+version = "0.1.0"
+description = "Orchestrator Graph"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-google-genai>=4.2.1",
+    "langchain-tavily>=0.2.17",
+    "resend>=2.23.0",
+]

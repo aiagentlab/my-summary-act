@@ -1,0 +1,74 @@
+[project]
+name = "my-summary-agent"
+version = "0.1.0"
+description = "My Summary Agent powered by Act Operator"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "langchain>=1.0.0",
+    "langchain-google-genai>=4.2.1",
+    "langchain-tavily>=0.2.17",
+    "langgraph>=1.0.0",
+    "resend>=2.23.0",
+]
+
+[dependency-groups]
+test = [
+    "pytest",
+    "langgraph-cli[inmem]",
+]
+lint = [
+    "pre-commit",
+    "ruff",
+]
+dev = [
+    "act-operator>=0.3.0",
+    {include-group = "test"},
+    {include-group = "lint"},
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
+[tool.pyright]
+include = ["casts", "tests"]
+exclude = [
+    "**/__pycache__/*", 
+    ".venv", 
+    "**/.venv"
+]
+
+[tool.uv.workspace]
+members = ["casts/*"]
+exclude = [
+    "casts/__pycache__",
+    "casts/**/__pycache__",
+    "casts/**/.venv",
+    "casts/.DS_Store",
+]
+
+[tool.ruff]
+exclude = [
+    "(^|/)(.venv|venv|node_modules|__pycache__|.pytest_cache|.ruff_cache|migrations|static|templates|.git|.github|.langgraph_api|media)(/|$)",
+    "^tests(/|$)",
+    "^unit_tests(/|$)",
+    ".env",
+    ".env.example",
+    ".gitignore",
+    "LICENSE",
+    "README.md",
+    "langgraph.json",
+    "uv.lock"
+]
+lint.select = [
+    "E",
+    "F",
+    "I",
+    "B",
+]
+lint.ignore = [
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B905"]
