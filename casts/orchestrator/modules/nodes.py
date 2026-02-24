@@ -17,6 +17,7 @@ from casts.base_node import BaseNode
 from .middlewares import apply_pii_filter
 from .models import get_gemini_model
 from .prompts import CONVERSATION_SUMMARY_PROMPT, SUMMARIZE_PROMPT
+from .utils import extract_text
 
 
 class WebSearchNode(BaseNode):
@@ -41,7 +42,7 @@ class WebSearchNode(BaseNode):
         return self._search
 
     def execute(self, state):
-        topic = state["messages"][-1].content
+        topic = extract_text(state["messages"][-1].content)
         results = self.search.invoke({"query": topic})
 
         return {"topic": topic, "search_results": results.get("results", [])}

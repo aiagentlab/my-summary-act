@@ -160,6 +160,19 @@ class TestWebSearchNode:
         assert result["topic"] == "AI 에이전트"
         mock_tavily.invoke.assert_called_once_with({"query": "AI 에이전트"})
 
+    def test_handles_content_block_list(self, mock_tavily):
+        """Content may arrive as a list of blocks from LangGraph Studio."""
+        node = WebSearchNode()
+        node._search = mock_tavily
+
+        content_blocks = [{"type": "text", "text": "AI 에이전트"}]
+        result = node.execute(
+            {"messages": [HumanMessage(content=content_blocks)]}
+        )
+
+        assert result["topic"] == "AI 에이전트"
+        mock_tavily.invoke.assert_called_once_with({"query": "AI 에이전트"})
+
     def test_returns_dict(self, mock_tavily):
         node = WebSearchNode()
         node._search = mock_tavily
