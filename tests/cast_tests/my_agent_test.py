@@ -34,11 +34,23 @@ class TestMyAgentCompilation:
         """Agent graph should have the configured name."""
         assert my_agent_graph.name == "myAgent"
 
+    def test_platform_graph_has_no_checkpointer(self):
+        """Platform-exported graph should have no checkpointer (Platform provides its own)."""
+        assert my_agent_graph.checkpointer is None
+
     def test_creates_new_instance(self):
         """my_agent() should create a fresh agent instance each call."""
         agent = my_agent()
         assert agent is not None
         assert hasattr(agent, "invoke")
+
+    def test_injected_checkpointer(self):
+        """my_agent(checkpointer=InMemorySaver()) should attach the checkpointer."""
+        from langgraph.checkpoint.memory import InMemorySaver
+
+        saver = InMemorySaver()
+        agent = my_agent(checkpointer=saver)
+        assert agent.checkpointer is saver
 
 
 # ---------------------------------------------------------------------------

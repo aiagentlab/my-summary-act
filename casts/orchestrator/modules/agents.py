@@ -9,6 +9,7 @@ Official document URL:
 """
 
 from langchain.agents import create_agent
+from langgraph.checkpoint.base import BaseCheckpointSaver
 
 from .middlewares import (
     get_hitl_middleware,
@@ -19,7 +20,7 @@ from .prompts import AGENT_SYSTEM_PROMPT
 from .tools import send_email, web_search
 
 
-def my_agent():
+def my_agent(checkpointer: BaseCheckpointSaver | None = None):
     """Create the myAgent instance with tools and middleware.
 
     Architecture:
@@ -30,6 +31,11 @@ def my_agent():
             - HumanInTheLoopMiddleware (interrupt before send_email)
             - SummarizationMiddleware (auto-summarize long conversations)
         - System Prompt: guides search → summarize → email workflow
+
+    Args:
+        checkpointer: Optional checkpointer for interrupt/resume support.
+            LangGraph Platform provides this automatically; pass InMemorySaver()
+            for local/test usage.
 
     Returns:
         Compiled agent graph ready for LangGraph Platform execution.
@@ -44,4 +50,5 @@ def my_agent():
         ],
         system_prompt=AGENT_SYSTEM_PROMPT,
         name="myAgent",
+        checkpointer=checkpointer,
     )
