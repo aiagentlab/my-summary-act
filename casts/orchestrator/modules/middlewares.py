@@ -104,7 +104,7 @@ def get_summarization_middleware() -> SummarizationMiddleware:
         SummarizationMiddleware configured for Gemini model.
     """
     return SummarizationMiddleware(
-        model="gemini-2.0-flash",
-        trigger={"messages": MESSAGE_THRESHOLD},
-        keep={"messages": 4},
+        model="google_genai:gemini-2.0-flash",
+        trigger=("messages", MESSAGE_THRESHOLD),
+        keep=("messages", 4),
     )

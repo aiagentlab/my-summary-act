@@ -95,3 +95,8 @@ class OrchestratorGraph(BaseGraph):
 
 
 orchestrator_graph = OrchestratorGraph()
+
+# Agent-based graph using create_agent (alternative to StateGraph)
+from casts.orchestrator.modules.agents import my_agent
+
+my_agent_graph = my_agent()

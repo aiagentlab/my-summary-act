@@ -1,7 +1,8 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "orchestrator": "./casts/orchestrator/graph.py:orchestrator_graph"
+    "orchestrator": "./casts/orchestrator/graph.py:orchestrator_graph",
+    "my_agent": "./casts/orchestrator/graph.py:my_agent_graph"
   },
   "env": ".env"
 }
